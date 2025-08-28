@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>365 – days</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f7f2ea; --ink:#2e2e2e; --accent:#e74c3c; --soft:#f6c6cc;
+      --line:#caa87a; --wood:#d49a57; --btn-green:#41b883;
+      --btn-red:#ff6b6b; --shadow:0 10px 0px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box;}
+    body{ margin:0; background:var(--bg); color:var(--ink);
+      font-family:"Poppins", sans-serif; scroll-behavior:smooth; overflow-x:hidden;}
+    section{ min-height:100vh; display:flex; align-items:center; justify-content:center; position:relative; padding:40px 24px;}
+
+    /* ---------- SECTION 1: HERO ---------- */
+    #s1 { position: relative; background: url('background.jpg') center/cover no-repeat; overflow:hidden; border-radius:12px;}
+    #s1 .overlay{ position:absolute; inset:0; background:rgba(255,255,255,0.3); z-index:0; border-radius:12px;}
+    #s1 .hero-wrap{ display:flex; align-items:center; gap:40px; width:min(1100px,95vw); position:relative; z-index:1;}
+    .polaroids{ display:flex; gap:18px;}
+    .polaroid{ width:160px; background:#3b0808; padding:10px 10px 26px; box-shadow:var(--shadow); border-radius:6px; transform:rotate(-6deg);}
+    .polaroid:nth-child(2){ transform:rotate(7deg) translateY(12px);}
+    .polaroid img{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:4px;}
+    .script{ font-family:"Great Vibes", cursive; font-size:68px; line-height:1;}
+    .script small{ display:block; font-size:.55em; opacity:.7; margin-top:.25em;}
+
+    /* Music Player */
+    .music-player{ margin-top:20px; display:flex; flex-direction:column; align-items:center; gap:10px; width:100%; max-width:400px;}
+    #playBtn{ padding:12px 20px; border:none; border-radius:8px; background:#41b883; color:#fff; font-weight:600; cursor:pointer; box-shadow:0 4px 6px rgba(0,0,0,0.2);}
+    .progress-container{ width:100%; height:8px; background:#dddddd; border-radius:5px; cursor:pointer; position:relative;}
+    .progress{ height:100%; width:0%; background:#e74c3c; border-radius:5px;}
+    #timeDisplay{ font-size:14px; color:#333;}
+
+    /* ---------- SECTION 2: PROLOG ---------- */
+    .prolog{ flex-direction:column; gap:28px;}
+    .title-script{ font-family:"Great Vibes", cursive; font-size:56px;}
+    .book{ width:min(780px,95vw); height:440px; position:relative; filter:drop-shadow(0 25px 30px rgba(0,0,0,.12));}
+    .book .cover{ position:absolute; inset:0; background:linear-gradient(90deg,#f9f5ef 0 48%, #e9e2d8 52% 100%); border-radius:12px;}
+    .book .spine{ position:absolute; left:50%; top:0; bottom:0; width:10px; transform:translateX(-50%); background:repeating-linear-gradient(#d9d1c6 0 2px,#efe9e0 2px 4px); box-shadow:inset 0 0 8px rgba(0,0,0,.08);}
+    .page{ position:absolute; top:28px; bottom:28px; width:45%; background:#fff; border-radius:8px; box-shadow:inset 0 0 0 1px #eee; padding:22px;}
+    .left{ left:4%; display:flex; align-items:center; justify-content:center;}
+    .right{ right:4%; font-size:14px; line-height:1.65; font-family:Georgia, serif;}
+    .polaroid-in{ width:220px; background:#fff; padding:10px 10px 26px; border-radius:6px; box-shadow:var(--shadow); transform:rotate(-3deg);}
+    .polaroid-in img{ width:200px; height:200px; object-fit:cover; border-radius:4px; display:block;}
+    .flowers{ position:absolute; inset:0; pointer-events:none; overflow:hidden;}
+    .flower{ position:absolute; font-size:28px; animation:fall linear infinite; opacity:.95;}
+    @keyframes fall{ from{transform:translateY(-10vh) rotate(0deg);} to{transform:translateY(110vh) rotate(180deg);} }
+
+    /* ---------- SECTION 3: HEART PUZZLE ---------- */
+    .puzzle-wrap{text-align:center; margin:40px auto;}
+    .puzzle-title{ font-weight:700; margin-bottom:20px; font-size:20px;}
+    .heart-mask{ width:min(520px,92vw); aspect-ratio:1/1; margin:auto; position:relative;
+      clip-path:path('M256 464C177 415 72 350 40 250 19 185 41 120 95 89c54-31 116-8 151 32 35-40 97-63 151-32 54 31 76 96 55 161-32 100-137 165-196 214-12 10-32 10-44 0Z');
+      background:#fff; overflow:hidden;}
+    #grid{ position:absolute; inset:0; display:flex; flex-wrap:wrap;}
+    .tile{ width:25%; height:25%; background-size:400% 400%; border:1px solid rgba(255,255,255,0.9); box-shadow:inset 0 0 3px rgba(0,0,0,.3);}
+    .controls{ margin-top:16px; display:flex; gap:10px; justify-content:center;}
+    .controls button{ padding:10px 18px; border:none; border-radius:6px; font-weight:600; cursor:pointer;}
+    .ready{ background:var(--btn-green); color:#fff;} .reset{ background:var(--btn-red); color:#fff;}
+
+    /* ---------- SECTION 4: JAR NOTES ---------- */
+    #s4{ flex-direction:column; gap:24px;}
+    .jar-container{ position:relative; width:280px;}
+    .jar-svg{ width:100%; height:auto;}
+    .notes{ position:absolute; bottom:50px; left:50%; transform:translateX(-50%); display:flex; flex-wrap:wrap; justify-content:center; gap:6px; width:70%;}
+    .note{ width:20px; height:40px; border-radius:4px; cursor:pointer; transition:transform .3s;}
+    .note:hover{ transform:scale(1.2) translateY(-5px);}
+    .pink{ background:#f8a5c2;} .blue{ background:#74b9ff;} .yellow{ background:#ffeaa7;} .green{ background:#55efc4;}
+    .quote-box{ margin-top:20px; padding:12px 16px; background:#fff0f5; border:2px solid #e1bad7; border-radius:10px; font-size:14px; color:#444;
+      opacity:0; transform:scale(.8); transition:all .4s ease;}
+    .quote-box.show{ opacity:1; transform:scale(1);}
+    .legend{ margin-top:16px; font-size:12px; color:#555; text-align:center;}
+    .dot{ display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:6px;}
+
+    /* ---------- SECTION 5: BIG QUOTE ---------- */
+    .quote{ font-weight:800; text-align:center; color:var(--accent);
+      font-size:clamp(32px,7vw,72px); line-height:1.05;}
+
+    /* ---------- SECTION 6: HANGING PHOTOS ---------- */
+    #s6{ flex-direction:column; gap:40px;}
+    .string{ width:80%; height:3px; background:#444; margin-bottom:50px;}
+    .photos{ display:flex; justify-content:center; gap:40px; flex-wrap:wrap;}
+    .photo{ width:120px; height:150px; background:#fff; border:2px solid #ccc; border-radius:6px; box-shadow:0 4px 6px rgba(0,0,0,0.2); transform:rotate(-3deg); transition:transform .3s;}
+    .photo:nth-child(2){ transform:rotate(2deg);} .photo:nth-child(3){ transform:rotate(-2deg);} .photo:nth-child(4){ transform:rotate(3deg);}
+    .photo:hover{ transform:scale(1.1) rotate(0deg);}
+    .photo img{ width:100%; height:100%; object-fit:cover; border-radius:4px;}
+
+    /* ---------- FOOTER NAV ---------- */
+    .footer-nav{ position:fixed; right:18px; bottom:18px; display:flex; gap:8px; opacity:.5;}
+    .footer-nav a{ display:inline-flex; width:38px; height:38px; border-radius:10px; background:#fff; align-items:center; justify-content:center; text-decoration:none; color:#666; box-shadow:var(--shadow); font-weight:700;}
+  </style>
+</head>
+<body>
+  <!-- Floating nav -->
+  <div class="footer-nav">
+    <a href="#s1">1</a><a href="#s2">2</a><a href="#s3">3</a>
+    <a href="#s4">4</a><a href="#s5">5</a><a href="#s6">6</a>
+  </div>
+
+  <!-- SECTION 1 -->
+  <section id="s1" class="hero">
+    <div class="overlay"></div>
+    <div class="hero-wrap">
+      <div class="polaroids">
+        <figure class="polaroid"><img src="basket.jpg" alt="us-1"></figure>
+        <figure class="polaroid"><img src="puzzle.jpg" alt="us-2"></figure>
+      </div>
+      <div>
+        <div class="script">Happy<br/>365 Day!
+          <small>28 Aug 2024 - 28 Aug 2025</small>
+        </div>
+
+        <!-- Music Player -->
+        <div class="music-player">
+          <button id="playBtn">▶ Play Kasih Putih</button>
+          <div class="progress-container" id="progressContainer">
+            <div class="progress" id="progress"></div>
+          </div>
+          <span id="timeDisplay">0:00 / 0:00</span>
+        </div>
+        <audio id="song" src="kasihputihfull.mp3"></audio>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 -->
+  <section id="s2" class="prolog">
+    <div class="title-script">Prolog</div>
+    <div class="book">
+      <div class="cover"></div><div class="spine"></div>
+      <div class="page left"><div class="polaroid-in"><img src="back.jpg" alt="memory"></div></div>
+      <div class="page right">I don’t have perfect words, just honest ones. Somehow you turned random days into a story I actually want to reread. I love the easy parts—laughs, late chats, inside jokes—but I also love the messy parts, when we don’t have all the answers and still choose each other anyway. If life is a book, I’m cool with slow pages and plot twists, as long as you’re still in the chapter with me. That’s it. That’s the whole prolog.</div>
+      <div class="flowers" id="flowers"></div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 -->
+  <section id="s3">
+    <div class="puzzle-wrap">
+      <div class="puzzle-title">Solve this puzzle!</div>
+      <div class="heart-mask"><div id="grid"></div></div>
+      <div class="controls">
+        <button class="ready" id="solveBtn">Benerin puzzle nya cintah</button>
+        <button class="reset" id="resetBtn">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4 -->
+  <section id="s4">
+    <div class="jar-container">
+      <svg class="jar-svg" viewBox="0 0 220 320">
+        <rect x="40" y="30" width="140" height="260" rx="18" fill="transparent" stroke="#333" stroke-width="4"/>
+      </svg>
+      <div class="notes">
+        <div class="note pink" data-quote="Hidup sederhana adalah kebahagiaan sejati."></div>
+        <div class="note blue" data-quote="Kenangan indah tumbuh dari momen kecil."></div>
+        <div class="note yellow" data-quote="Ketenangan datang saat hati mampu bersyukur."></div>
+        <div class="note green" data-quote="Setiap hari adalah halaman baru."></div>
+        <div class="note pink" data-quote="Waktu yang baik adalah waktu yang kita isi bersama."></div>
+      </div>
+    </div>
+    <div class="quote-box" id="quoteBox"></div>
+    <div class="legend">
+      <p><span class="dot pink"></span> Open when you're happy</p>
+      <p><span class="dot blue"></span> Open when you're sad</p>
+      <p><span class="dot yellow"></span> Open when you need sunshine</p>
+      <p><span class="dot green"></span> Open when you want motivation</p>
+    </div>
+  </section>
+
+  <!-- SECTION 5 -->
+  <section id="s5">
+    <div class="quote">YOU ARE<br/>THE BEST THING<br/>THAT’S EVER BEEN<br/>MINE</div>
+  </section>
+
+  <!-- SECTION 6 -->
+  <section id="s6">
+    <div class="string"></div>
+    <div class="photos">
+      <div class="photo"><img src="lippo.jpg" alt="Memory 1"></div>
+      <div class="photo"><img src="bahalap3.jpg" alt="Memory 2"></div>
+      <div class="photo"><img src="sekolah.jpg" alt="Memory 3"></div>
+      <div class="photo"><img src="basketsmada.jpg" alt="Memory 4"></div>
+    </div>
+  </section>
+
+  <script>
+    // Flowers animation
+    const flowers=document.getElementById('flowers');
+    const emojis=['🌸','🌺','🌹','🌼','💮'];
+    for(let i=0;i<15;i++){
+      const f=document.createElement('div');
+      f.className='flower';
+      f.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      f.style.left=Math.random()*100+'%';
+      f.style.animationDuration=4+Math.random()*6+'s';
+      f.style.fontSize=20+Math.random()*20+'px';
+      flowers.appendChild(f);
+    }
+
+    // Puzzle
+    const grid=document.getElementById('grid');
+    const imgUrl='puzzle.jpg';
+    function buildTiles(){
+      grid.innerHTML='';
+      const order=[...Array(16).keys()].sort(()=>Math.random()-0.5);
+      for(let i=0;i<16;i++){
+        const d=document.createElement('div');
+        d.className='tile';
+        const col=i%4,row=(i/4|0);
+        d.style.backgroundImage=`url(${imgUrl})`;
+        d.style.backgroundSize='400% 400%';
+      d.style.backgroundPosition = `${-col * 100}% ${-row * 100}%`;
+        d.style.order=order[i];
+        grid.appendChild(d);
+      }
+    } //
+    buildTiles();
+    document.getElementById('resetBtn').onclick=buildTiles;
+    document.getElementById('solveBtn').onclick=()=>[...grid.children].forEach((el,i)=>el.style.order=i);
+
+    // Jar Notes
+    document.querySelectorAll('#s4 .note').forEach(note=>{
+      note.addEventListener('click',()=>{
+        const quoteBox=document.getElementById('quoteBox');
+        quoteBox.textContent=note.dataset.quote;
+        quoteBox.classList.add('show');
+        setTimeout(()=>quoteBox.classList.remove('show'),6000);
+      });
+    });
+
+    // Music Player
+    const playBtn = document.getElementById('playBtn'); // ✅ FIXED
+    const song = document.getElementById('song');
+    const progressContainer = document.getElementById('progressContainer');
+    const progress = document.getElementById('progress');
+    const timeDisplay = document.getElementById('timeDisplay');
+    let isPlaying = false;
+    let fadeInterval;
+
+    // Fade In
+    function fadeIn(audio) {
+      clearInterval(fadeInterval);
+      audio.volume = 0;
+      audio.play();
+      fadeInterval = setInterval(() => {
+        if (audio.volume < 1) {
+          audio.volume = Math.min(audio.volume + 0.05, 1);
+        } else {
+          clearInterval(fadeInterval);
+        }
+      }, 200);
+    }
+
+    // Fade Out
+    function fadeOut(audio) {
+      clearInterval(fadeInterval);
+      fadeInterval = setInterval(() => {
+        if (audio.volume > 0.05) {
+          audio.volume = Math.max(audio.volume - 0.05, 0);
+        } else {
+          audio.pause();
+          clearInterval(fadeInterval);
+          audio.volume = 1; // reset biar balik normal
+        }
+      }, 200);
+    }
+
+    // Klik tombol play/pause
+    playBtn.addEventListener('click', () => {
+      if (!isPlaying) {
+        fadeIn(song);
+        playBtn.textContent = '⏸ Pause Kasih Putih';
+        isPlaying = true;
+      } else {
+        fadeOut(song);
+        playBtn.textContent = '▶ Play Kasih Putih';
+        isPlaying = false;
+      }
+    });
+
+    // Update progress bar + waktu
+    song.addEventListener('timeupdate', () => {
+      const { currentTime, duration } = song;
+      if (duration > 0) {
+        const percent = (currentTime / duration) * 100;
+        progress.style.width = percent + '%';
+
+        const formatTime = (time) => {
+          const minutes = Math.floor(time / 60);
+          const seconds = Math.floor(time % 60);
+          return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        };
+        timeDisplay.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+      }
+    });
+
+    // Klik progress bar untuk geser lagu
+    progressContainer.addEventListener('click', (e) => {
+      const width = progressContainer.clientWidth;
+      const clickX = e.offsetX;
+      const duration = song.duration;
+      song.currentTime = (clickX / width) * duration;
+    });
+
+    // Kalau lagu selesai, reset tombol
+    song.addEventListener('ended', () => {
+      playBtn.textContent = '▶ Play Kasih Putih';
+      isPlaying = false;
+    });
+  </script>
+</body>
+</html>
+
